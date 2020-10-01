@@ -3,37 +3,21 @@ addbotao.addEventListener("click", function(event){
 event.preventDefault();
 
 var form = document.querySelector("#form-adiciona");
-var pacientee = obtemPacienteFormulario(form);
+var paciente = obtemPacienteFormulario(form);
 
-var pacienteTr = document.createElement("tr");
-
-var nometd = document.createElement("td");
-var pesotd= document.createElement("td");
-var alturatd= document.createElement("td");
-var gorduratd= document.createElement("td");
-var imctd= document.createElement("td");
-
-nometd.textContent = nome;
-pesotd.textContent = peso;
-alturatd.textContent = altura;
-gorduratd.textContent = gordura;
-imctd.textContent = calculaImc(peso,altura);
-
-pacienteTr.appendChild(nometd);
-pacienteTr.appendChild(pesotd);
-pacienteTr.appendChild(alturatd);
-pacienteTr.appendChild(gorduratd);
-pacienteTr.appendChild(imctd);
+var pacienteTr = montaTr(paciente);
 
 var tabela = document.querySelector("#tabela-pacientess");
 
 tabela.appendChild(pacienteTr);
 
+form.reset();
+
 });
 
 function obtemPacienteFormulario(form){
 
-var pacientee = {
+var paciente = {
 nome : form.nome.value,
 peso : form.peso.value,
 altura : form.altura.value,
@@ -41,6 +25,28 @@ gordura : form.gordura.value,
 imc: calculaImc(form.peso.value , form.altura.value),
 
 }
+return paciente;
+}
 
+function montaTr (paciente){
+
+    var pacienteTr = document.createElement("tr");
+    pacienteTr.classList.add("paciente");
+
+    pacienteTr.appendChild(montaTd(paciente.nome , "info-nome"));
+    pacienteTr.appendChild(montaTd(paciente.peso , "info-peso"));
+    pacienteTr.appendChild(montaTd(paciente.altura , "info-altura"));
+    pacienteTr.appendChild(montaTd(paciente.gorduratd , "info-gordura"));
+    pacienteTr.appendChild(montaTd(paciente.imc , "info-imc"));
+    
+return pacienteTr;
+}
+
+function montaTd(dado,classe){
+
+var td = document.createElement("td");
+td.textContent = dado;
+td.classList.add(classe);
+return td;
 
 }
